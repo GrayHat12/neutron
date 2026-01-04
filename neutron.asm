@@ -24,6 +24,34 @@
             mov rax, [heapptr]
         %endmacro
 
+        %macro CORE_MALLOC 0
+            ; don't call this from anywhere other than malloc. it's supposed to be for internal use only
+            section .data
+                %%msg db "CALLING MALLOC", 10
+                %%len equ $-%%msg
+            
+            section .text
+                push rax ; save state
+                push rdx
+                push rsi
+
+                ; -- for debug purposes
+                mov rsi, %%msg
+                mov rdx, %%len
+                PRINT
+                ; -- end debug
+
+                mov rdi, rbx
+                mov rax, 12
+                syscall
+
+                mov [heaplimit], rax
+
+                pop rsi
+                pop rdx
+                pop rax ; restore state
+        %endmacro
+
         %macro MALLOC 1
             ; expects allocation size as argument
             ; returns starting address in rax
@@ -37,13 +65,7 @@
             cmp rbx, [heaplimit]
             jle %%allocated
             
-            push rax ; save rax state
-            mov rdi, rbx
-            mov rax, 12
-            syscall
-
-            mov [heaplimit], rax
-            pop rax ; restore rax state
+            CORE_MALLOC
 
             %%allocated:
                 mov [heapptr], rbx
