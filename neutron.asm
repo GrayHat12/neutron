@@ -223,6 +223,8 @@
 
         _start:
             INITIALIZE_HEAP
+
+            ; %HELIUM_CODE% ;
             
             ; mov rax, [heapptr]
             UINT2HEX rax
