@@ -36,9 +36,9 @@
                 push rsi
 
                 ; -- for debug purposes
-                mov rsi, %%msg
-                mov rdx, %%len
-                PRINT
+                ; mov rsi, %%msg
+                ; mov rdx, %%len
+                ; PRINT
                 ; -- end debug
 
                 mov rdi, rbx
