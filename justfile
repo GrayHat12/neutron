@@ -7,7 +7,7 @@ _list:
   @just --list
 
 @compile asmfile=default_asm_file objfile=default_obj_file outfile=default_out_file:
-    @nasm -felf64 {{asmfile}} -o {{objfile}} 
+    @nasm -g -felf64 {{asmfile}} -o {{objfile}} 
     @ld -o {{outfile}} {{objfile}}
 
 @run asmfile=default_asm_file objfile=default_obj_file outfile=default_out_file: (compile asmfile objfile outfile)

@@ -1,4 +1,5 @@
     global _start
+    DEFAULT ABS
 
     section .bss
         heapptr: resq 1 ; reserve 8 bytes to store heap pointer
